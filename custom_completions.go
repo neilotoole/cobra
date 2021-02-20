@@ -196,6 +196,10 @@ func (c *Command) getCompletions(args []string) (*Command, []string, ShellCompDi
 		return c, []string{}, ShellCompDirectiveDefault, fmt.Errorf("Unable to find a command for arguments: %v", trimmedArgs)
 	}
 
+	// Set the context so that the user's completion functions
+	// can have access to the original context
+	finalCmd.ctx = c.ctx
+
 	// Check if we are doing flag value completion before parsing the flags.
 	// This is important because if we are completing a flag value, we need to also
 	// remove the flag name argument from the list of finalArgs or else the parsing
